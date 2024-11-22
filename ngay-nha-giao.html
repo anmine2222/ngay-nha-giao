@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ngày Nhà Giáo</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(45deg, #ff99cc, #ffccff);
+      text-align: center;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      height: 100vh;
+    }
+    h1 {
+      color: #2C3E50;
+      font-size: 48px;
+      margin-top: 20px;
+    }
+    p {
+      font-size: 20px;
+      color: #6C5B7B;
+      margin-bottom: 30px;
+    }
+    .gift {
+      margin: 30px auto;
+      display: inline-block;
+      cursor: pointer;
+      width: 250px;
+      height: 250px;
+      background: linear-gradient(135deg, #FF7F50, #FF6347);
+      color: white;
+      font-size: 50px;
+      line-height: 250px;
+      border-radius: 20px;
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .gift:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.2);
+    }
+    #imageOutput {
+      margin-top: 20px;
+      border: 2px solid #ddd;
+      padding: 20px;
+      background-color: #fff;
+      width: 300px;
+      display: inline-block;
+    }
+
+    /* Hiệu ứng hoa rơi */
+    .flower {
+      position: absolute;
+      top: -30px;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://cdn.pixabay.com/photo/2017/03/20/19/24/flower-2154790_960_720.png');
+      background-size: cover;
+      opacity: 0.8;
+      animation: fall 5s infinite linear;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateX(0) translateY(0);
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(100vw) translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Chúc Mừng Ngày Nhà Giáo!</h1>
+  <p>Nhấn vào quà để tạo ra hình ảnh!</p>
+
+  <!-- Khung quà duy nhất -->
+  <div class="gift" onclick="createImage()">Quà</div>
+
+  <div id="imageOutput">
+    <h3>scan me!!</h3>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <script>
+    // Tạo hiệu ứng hoa rơi ngẫu nhiên
+    function createFlower() {
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+      flower.style.left = Math.random() * 100 + 'vw';  // Vị trí ngẫu nhiên trên trục X
+      flower.style.animationDuration = Math.random() * 5 + 5 + 's'; // Thời gian rơi ngẫu nhiên
+      document.body.appendChild(flower);
+
+      // Xóa hoa khi hiệu ứng hoàn tất
+      flower.addEventListener('animationend', () => {
+        flower.remove();
+      });
+    }
+
+    // Tạo hoa rơi mỗi 300ms
+    setInterval(createFlower, 300);
+
+    // Tạo ảnh khi nhấn vào món quà
+    function createImage() {
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+      canvas.width = 300;
+      canvas.height = 300;
+
+      // Xóa canvas trước khi vẽ mới
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Tạo ảnh mới khi nhấn vào quà
+      var img = new Image();
+      img.onload = function() {
+        // Vẽ ảnh lên canvas
+        ctx.drawImage(img, 50, 50, 200, 200);
+      };
+
+      // Thay URL ảnh của bạn vào đây
+      img.src = 'https://cdn.qr-code-generator.com/qrcode-preview?background_color=%23ffffff&foreground_color=%23000000&marker_left_inner_color=%23000000&marker_left_outer_color=%23000000&marker_right_inner_color=%23000000&marker_right_outer_color=%23000000&marker_bottom_inner_color=%23000000&marker_bottom_outer_color=%23000000&marker_left_template=version17&marker_right_template=version17&marker_bottom_template=version17&qr_code_pattern=rounded-2&qr_code_text=https%3A%2F%2Fqrco.de%2FbfZzFP&Expires=1732319511&Signature=sRJx1Civ7aIHJW6Z4O3CSIdg9ITcwsNqFx0411LsddJLAVd6Ig~U3yqH8BzY8uQpskajEcNy6m40nL9I1K8zC4t1cTc-UGHiEEmlbq8L1ejHCVoDZuFed2YNpRhZFS4uPsPLkG7hKSK-pEo5iYDnH~xOeLZ5~qVFTqyxDjRRqdq4XClTQM7mhNUMxggLjGEIkhrhAidA2QC9M4n8D-yPSG9PEktJfjQgJr6zsUgtWnUJ5KE6PIrhfeJAqIMOBq0CiLJdn7txAar7cDmpqtAb4ZbiPzxN6taPq2kC3Y602cpYcdIcr4O9Cu-1pJ0wqpHMcycsH-PV959-OyKBYpZvHw__&Key-Pair-Id=KKMPOJU8AYATR'; // Thay thế URL này bằng ảnh của bạn
+    }
+  </script>
+
+</body>
+</html>
